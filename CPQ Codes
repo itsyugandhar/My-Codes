@@ -1,0 +1,9 @@
+// Single value lookup
+function getSingleValueFromTable(table, field, conditionField, conditionValue) {
+    query = "select " + field + " from " + table + " where " + conditionField + " = '" + conditionValue + "'";
+    records = bmql(query);
+    for record in records {
+        return get(record, field);
+    }
+    return "";
+}

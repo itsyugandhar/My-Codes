@@ -10,3 +10,70 @@ document.getElementById("fuctionArraySet")
   // Code for making readonly in arrayset for particular index
  CPQJS.setAttributeState('functionName_t', { updatable: false }, FunctionIndex_arr[i]);
 
+//CPQ Initialization Wrapper (Reusable Everywhere)
+window.CPQJSReady && CPQJSReady(function () {
+    if (CPQJS.isCommerce) {
+        jQuery(document).ready(function () {
+            console.log("CPQ Commerce page loaded");
+        });
+    }
+}); OR 
+window.CPQJSReady && CPQJSReady(function () {
+  jQuery(document).ready(function () {
+
+    // Your reusable logic here
+
+  });
+});
+
+
+
+//Safe Attribute Getter (Reusable Utility)
+function getAttr(attrName, index = null) {
+    try {
+        return index !== null 
+            ? CPQJS.getAttributeVal(attrName, index) 
+            : CPQJS.getAttributeVal(attrName);
+    } catch (e) {
+        console.warn(`Error getting ${attrName}`, e);
+        return null;
+    }
+}
+
+//Safe Attribute State Setter (Reusable)
+function setFieldEditable(field, isEditable, index = null) {
+    try {
+        CPQJS.setAttributeState(field, { updatable: isEditable }, index);
+    } catch (e) {
+        console.warn(`Error updating ${field}`, e);
+    }
+}
+
+//String → Array Parser (Very Useful)
+function parseDelimitedString(data, rowDelim = "#$#", colDelim = "!@!") {
+    if (!data) return [];
+
+    return data.split(rowDelim).map(row => {
+        const cols = row.split(colDelim);
+        return cols.length > 1 ? cols : null;
+    }).filter(Boolean);
+}
+
+//Attribute Change Listener
+CPQJS.onAttributeChange("editConfiguredFunctions_c", () => {
+    console.log("Attribute changed");
+    updateFunctionFields();
+});
+
+//Delimited String Builder (Legacy CPQ Pattern)
+function buildDelimitedString(values, delimiter) {
+  return values.map(v => delimiter + v).join('');
+} --> EX : let result = buildDelimitedString([1,2,3], "$$");
+// $$1$$2$$3
+
+
+
+
+
+
+

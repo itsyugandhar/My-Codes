@@ -1,0 +1,12 @@
+
+// Code to hide the arrayset first check box field
+document.getElementById("fuctionArraySet")
+  .getElementsByClassName("cpq-table-select oj-table-data-cell cpq-table-data-cell")[i]
+  .style.visibility = "hidden";
+  
+ // Code for making readonly in arrayset
+ CPQJS.setAttributeState('discountMarkup', { updatable: false }, i);
+ 
+  // Code for making readonly in arrayset for particular index
+ CPQJS.setAttributeState('functionName_t', { updatable: false }, FunctionIndex_arr[i]);
+
